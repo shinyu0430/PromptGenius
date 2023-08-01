@@ -15,6 +15,7 @@ const UserSchema = new Schema({
   }
 });
 
+// if models.User exists. If it does, User is assigned the value of models.User.
 const User = models.User || model("User", UserSchema);
 
 export default User;

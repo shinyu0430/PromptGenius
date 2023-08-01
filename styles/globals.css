@@ -169,3 +169,71 @@ p{
 .flex-between {
   @apply flex justify-between items-center;
 }
+
+
+
+/* styles/sidebar.css */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 60px;
+  background-color: rgba(255,255,255,1);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  border-right: 1px solid rgb(189, 189, 189);
+  overflow-x: hidden;
+  transition: width 0.3s ease;
+  z-index:999
+}
+
+.sidebar.open {
+  width: 230px;
+}
+
+.sidebar-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  cursor: pointer;
+}
+
+.toggle-icon {
+  width: 24px;
+  height: 2px;
+  background-color: #333;
+}
+
+.sidebar-content {
+  padding: 20px;
+}
+
+/* styles/toast.css */
+.toast {
+  position: fixed;
+  font-size:16px;
+  bottom: 20px;
+  right: 20px;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+
+ /* 隱藏水平滾動條 */
+.hideScroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* 只在滾動時顯示水平滾動條，當用戶滾動頁面時重新顯示 */
+/* .hideScroll:hover::-webkit-scrollbar {
+  display: block;
+} */

@@ -1,6 +1,17 @@
+"use client"
+
 import Feed from '@components/Feed';
+import { useState } from 'react';
+import Sidebar from '@components/Sidebar';
 const Home = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
   return (
+    <>
+    <Sidebar isOpen={isSidebarOpen} onToggle={toggleSidebar} />
     <section className="w-full flex-center flex-col">
       <h1 className="head_text text-center max-sm:text-xl">
         Discover & Share
@@ -12,6 +23,7 @@ const Home = () => {
       </p>
       <Feed />
     </section>
+    </>
   )
 }
 

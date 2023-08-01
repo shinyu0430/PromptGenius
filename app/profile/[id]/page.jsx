@@ -25,7 +25,7 @@ const UserProfile = ({ params }) => {
   return (
     <Profile
       name={userName}
-      desc={`歡迎來到${userName}的個人專屬資料頁面。探索${userName}超棒的 Prompt，並受到他們豐富想像力的啟發。`}
+      desc={`歡迎來到${userName}的個人資料頁面。探索${userName}超棒的 Prompt。`}
       data={userPosts}
     />
   );

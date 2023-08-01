@@ -3,16 +3,22 @@
 import { useState, useEffect } from "react";
 
 import PromptCard from "./PromptCard";
+import Toast from "./Toast"
 import Tag from "./Tag"
 
-const PromptCardList = ({ data, handleTagClick }) => {
+
+
+const PromptCardList = ({ data, handleTagClick, handleCopyClick, copied }) => {
   return (
+
     <div className='mt-16 prompt_layout'>
       {data.map((post) => (
         <PromptCard
           key={post._id}
           post={post}
           handleTagClick={handleTagClick}
+          handleCopyClick={handleCopyClick}
+          copied={copied}
         />
       ))}
     </div>
@@ -21,15 +27,17 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
 const TagList = ({ data, handleTagClick }) => {
   return (
-    <div className="bg-gray-300 p-5 bg-opacity-25">
-      {
-        data.map((tag) => (
-          <Tag 
-          text={tag} 
-          handleTagClick={handleTagClick} 
-          key={tag} />
-        ))
-      }
+    <div className="p-5 overflow-x-auto hideScroll">
+      <div className="flex space-x-2 align-start">
+        {
+          data.map((tag) => (
+            <Tag
+              text={tag}
+              handleTagClick={handleTagClick}
+              key={tag} />
+          ))
+        }
+      </div>
     </div>
   )
 }
@@ -41,9 +49,9 @@ const Feed = () => {
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
+  const [copied, setCopied] = useState("");
 
-
-  const tag_list = ["ChatGPT", "Midjourney", "Clipdrop"];
+  const tag_list = ["ChatGPT", "Midjourney", "Clipdrop", "Magenta", "Claude", "Bard AI", "Image Creator"];
 
   const fetchPosts = async () => {
     const response = await fetch("/api/prompt");
@@ -79,11 +87,18 @@ const Feed = () => {
   };
 
   const handleTagClick = (tagName) => {
-    console.log(tagName)
     setSearchText(tagName);
 
     const searchResult = filterPrompts(tagName);
     setSearchedResults(searchResult);
+  };
+
+  const handleCopyClick = (post) => {
+    console.log("Test")
+    setCopied(post.prompt);
+    // 瀏覽器原生的 navigator.clipboard.write() API
+    navigator.clipboard.writeText(post.prompt);
+    setTimeout(() => setCopied(false), 3000);
   };
 
   return (
@@ -112,12 +127,19 @@ const Feed = () => {
         <PromptCardList
           data={searchedResults}
           handleTagClick={handleTagClick}
+          handleCopyClick={handleCopyClick}
+          copied={copied}
         />
       ) : (
-        <PromptCardList 
-        data={allPosts} 
-        handleTagClick={handleTagClick} />
+        <PromptCardList
+          data={allPosts}
+          handleTagClick={handleTagClick}
+          handleCopyClick={handleCopyClick}
+          copied={copied}
+        />
       )}
+      <Toast message="Prompt 複製成功" show={copied} />
+      {/* <Toast message="Prompt 複製成功" show={true}/> */}
     </section>
   );
 };
